@@ -1,14 +1,16 @@
 """Makes the recorded Playwright run in the given directory look like this job's own run.
 
 The run was recorded elsewhere: its paths start with a placeholder, and its times are when it was
-recorded. A real run is written in the job's checkout, after the checkout. So this points the paths
-at the directory, in the report and inside each trace, and moves the times so the run ends now.
+recorded. A real run is written in the job's checkout, after the checkout, and isn't committed. So
+this points the paths at the directory, in the report and inside each trace, moves the times so the
+run starts now, and tells git to ignore the rewritten files.
 """
 
 import json
+import subprocess
 import sys
 import zipfile
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from pathlib import Path
 
 PLACEHOLDER = "/__KWIKQA_RUN_ROOT__"
@@ -23,9 +25,9 @@ root = Path(sys.argv[1]).resolve()
 report_path = root / "report.json"
 report = json.loads(report_path.read_text().replace(PLACEHOLDER, str(root)))
 
-started = parse_time(report["stats"]["startTime"])
-starts = datetime.now(timezone.utc) - timedelta(milliseconds=report["stats"]["duration"])
-shift = starts - started
+# Now, rather than when the run ends: GitHub creates a pull request's merge commit moments before
+# the job, and a commit made after the run started reads as one the run never saw.
+shift = datetime.now(timezone.utc) - parse_time(report["stats"]["startTime"])
 
 
 def move_times(node):
@@ -42,14 +44,20 @@ def move_times(node):
 
 
 move_times(report)
-report_path.write_text(json.dumps(report, indent=2) + "\n")
+# Written as Playwright writes it, so only the paths and times change.
+report_path.write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n")
 
 # Only entries that hold the placeholder are rewritten, so binary entries stay as they are.
-for trace in sorted(root.glob("test-results/*/trace.zip")):
+traces = sorted(root.glob("test-results/*/trace.zip"))
+for trace in traces:
     with zipfile.ZipFile(trace) as archive:
         entries = [(info, archive.read(info)) for info in archive.infolist()]
     with zipfile.ZipFile(trace, "w") as archive:
         for info, data in entries:
             archive.writestr(info, data.replace(PLACEHOLDER.encode(), str(root).encode()))
 
-print(f"Pointed the run at {root}; it now ends at {datetime.now(timezone.utc):%H:%M:%S} UTC.")
+subprocess.run(
+    ["git", "update-index", "--skip-worktree", "--", str(report_path), *map(str, traces)],
+    check=True,
+)
+print(f"Pointed the run at {root}; it starts at {datetime.now(timezone.utc):%H:%M:%S} UTC.")
