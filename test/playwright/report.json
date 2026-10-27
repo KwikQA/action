@@ -1,0 +1,454 @@
+{
+  "config": {
+    "argv": [
+      "/home/developer/.nvm/versions/node/v24.13.0/bin/node",
+      "/__KWIKQA_RUN_ROOT__/node_modules/@playwright/test/cli.js",
+      "test"
+    ],
+    "configFile": "/__KWIKQA_RUN_ROOT__/playwright.config.ts",
+    "rootDir": "/__KWIKQA_RUN_ROOT__/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/__KWIKQA_RUN_ROOT__/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/__KWIKQA_RUN_ROOT__/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 8000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/__KWIKQA_RUN_ROOT__/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "",
+        "testDir": "/__KWIKQA_RUN_ROOT__/tests",
+        "snapshotDir": "/__KWIKQA_RUN_ROOT__/tests",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 8000,
+        "use": {
+          "channel": "chrome",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": ""
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json",
+        {
+          "outputFile": "report.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 8,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "app.spec.ts",
+      "file": "app.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "renamed test id",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 8000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 8057,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 8000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 8000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 8000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/__KWIKQA_RUN_ROOT__/tests/app.spec.ts",
+                        "column": 42,
+                        "line": 30
+                      },
+                      "message": "Error: locator.click: Test timeout of 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('apply-coupon')\u001b[22m\n\n\n  28 | test(\"renamed test id\", async ({ page }) => {\n  29 |   await page.getByTestId(\"coupon-input\").fill(\"SAVE10\");\n> 30 |   await page.getByTestId(\"apply-coupon\").click();\n     |                                          ^\n  31 | });\n  32 |\n  33 | test(\"renamed button text\", async ({ page }) => {\n    at /__KWIKQA_RUN_ROOT__/tests/app.spec.ts:30:42"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T11:31:01.094Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/__KWIKQA_RUN_ROOT__/test-results/app-renamed-test-id/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/__KWIKQA_RUN_ROOT__/test-results/app-renamed-test-id/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/__KWIKQA_RUN_ROOT__/test-results/app-renamed-test-id/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c31ff144dc4fee3acd0a-25d989010c57f9e13676",
+          "file": "app.spec.ts",
+          "line": 28,
+          "column": 5
+        },
+        {
+          "title": "renamed button text",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 8000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 8053,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 8000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 8000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 8000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/__KWIKQA_RUN_ROOT__/tests/app.spec.ts",
+                        "column": 60,
+                        "line": 34
+                      },
+                      "message": "Error: locator.click: Test timeout of 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: 'Apply coupon' })\u001b[22m\n\n\n  32 |\n  33 | test(\"renamed button text\", async ({ page }) => {\n> 34 |   await page.getByRole(\"button\", { name: \"Apply coupon\" }).click();\n     |                                                            ^\n  35 | });\n  36 |\n  37 | test(\"wrong total\", async ({ page }) => {\n    at /__KWIKQA_RUN_ROOT__/tests/app.spec.ts:34:60"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T11:31:09.737Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/__KWIKQA_RUN_ROOT__/test-results/app-renamed-button-text/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/__KWIKQA_RUN_ROOT__/test-results/app-renamed-button-text/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/__KWIKQA_RUN_ROOT__/test-results/app-renamed-button-text/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c31ff144dc4fee3acd0a-616fc3c983280604a0bc",
+          "file": "app.spec.ts",
+          "line": 33,
+          "column": 5
+        },
+        {
+          "title": "wrong total",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 8000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1725,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('order-total')\nExpected: \u001b[32m\"Total: $3\u001b[7m0\u001b[27m.00\"\u001b[39m\nReceived: \u001b[31m\"Total: $3\u001b[7m6\u001b[27m.00\"\u001b[39m\nTimeout:  1500ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('order-total') with timeout 1500ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('order-total')\u001b[22m\n\u001b[2m    16 × locator resolved to <p id=\"total\" data-testid=\"order-total\">Total: $36.00</p>\u001b[22m\n\u001b[2m       - unexpected value \"Total: $36.00\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('order-total')\nExpected: \u001b[32m\"Total: $3\u001b[7m0\u001b[27m.00\"\u001b[39m\nReceived: \u001b[31m\"Total: $3\u001b[7m6\u001b[27m.00\"\u001b[39m\nTimeout:  1500ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('order-total') with timeout 1500ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('order-total')\u001b[22m\n\u001b[2m    16 × locator resolved to <p id=\"total\" data-testid=\"order-total\">Total: $36.00</p>\u001b[22m\n\u001b[2m       - unexpected value \"Total: $36.00\"\u001b[22m\n\n    at /__KWIKQA_RUN_ROOT__/tests/app.spec.ts:39:49",
+                    "location": {
+                      "file": "/__KWIKQA_RUN_ROOT__/tests/app.spec.ts",
+                      "column": 49,
+                      "line": 39
+                    },
+                    "snippet": "  37 | test(\"wrong total\", async ({ page }) => {\n  38 |   await page.getByTestId(\"apply-discount\").click();\n> 39 |   await expect(page.getByTestId(\"order-total\")).toHaveText(\"Total: $30.00\");\n     |                                                 ^\n  40 | });\n  41 |\n  42 | test(\"ambiguous button\", async ({ page }) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/__KWIKQA_RUN_ROOT__/tests/app.spec.ts",
+                        "column": 49,
+                        "line": 39
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator:  getByTestId('order-total')\nExpected: \u001b[32m\"Total: $3\u001b[7m0\u001b[27m.00\"\u001b[39m\nReceived: \u001b[31m\"Total: $3\u001b[7m6\u001b[27m.00\"\u001b[39m\nTimeout:  1500ms\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" getByTestId('order-total') with timeout 1500ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('order-total')\u001b[22m\n\u001b[2m    16 × locator resolved to <p id=\"total\" data-testid=\"order-total\">Total: $36.00</p>\u001b[22m\n\u001b[2m       - unexpected value \"Total: $36.00\"\u001b[22m\n\n\n  37 | test(\"wrong total\", async ({ page }) => {\n  38 |   await page.getByTestId(\"apply-discount\").click();\n> 39 |   await expect(page.getByTestId(\"order-total\")).toHaveText(\"Total: $30.00\");\n     |                                                 ^\n  40 | });\n  41 |\n  42 | test(\"ambiguous button\", async ({ page }) => {\n    at /__KWIKQA_RUN_ROOT__/tests/app.spec.ts:39:49"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T11:31:18.271Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/__KWIKQA_RUN_ROOT__/test-results/app-wrong-total/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/__KWIKQA_RUN_ROOT__/test-results/app-wrong-total/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/__KWIKQA_RUN_ROOT__/test-results/app-wrong-total/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/__KWIKQA_RUN_ROOT__/tests/app.spec.ts",
+                    "column": 49,
+                    "line": 39
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c31ff144dc4fee3acd0a-96efb1280e8f4984f582",
+          "file": "app.spec.ts",
+          "line": 37,
+          "column": 5
+        },
+        {
+          "title": "ambiguous button",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 8000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 185,
+                  "error": {
+                    "message": "Error: locator.click: Error: strict mode violation: getByRole('button') resolved to 2 elements:\n    1) <button type=\"button\" onclick=\"apply()\" data-testid=\"apply-discount\">Apply discount</button> aka getByTestId('apply-discount')\n    2) <button>Pay now</button> aka getByRole('button', { name: 'Pay now' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button')\u001b[22m\n",
+                    "stack": "Error: locator.click: Error: strict mode violation: getByRole('button') resolved to 2 elements:\n    1) <button type=\"button\" onclick=\"apply()\" data-testid=\"apply-discount\">Apply discount</button> aka getByTestId('apply-discount')\n    2) <button>Pay now</button> aka getByRole('button', { name: 'Pay now' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button')\u001b[22m\n\n    at /__KWIKQA_RUN_ROOT__/tests/app.spec.ts:43:34",
+                    "location": {
+                      "file": "/__KWIKQA_RUN_ROOT__/tests/app.spec.ts",
+                      "column": 34,
+                      "line": 43
+                    },
+                    "snippet": "  41 |\n  42 | test(\"ambiguous button\", async ({ page }) => {\n> 43 |   await page.getByRole(\"button\").click();\n     |                                  ^\n  44 | });\n  45 |\n  46 | test(\"css selector missing\", async ({ page }) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/__KWIKQA_RUN_ROOT__/tests/app.spec.ts",
+                        "column": 34,
+                        "line": 43
+                      },
+                      "message": "Error: locator.click: Error: strict mode violation: getByRole('button') resolved to 2 elements:\n    1) <button type=\"button\" onclick=\"apply()\" data-testid=\"apply-discount\">Apply discount</button> aka getByTestId('apply-discount')\n    2) <button>Pay now</button> aka getByRole('button', { name: 'Pay now' })\n\nCall log:\n\u001b[2m  - waiting for getByRole('button')\u001b[22m\n\n\n  41 |\n  42 | test(\"ambiguous button\", async ({ page }) => {\n> 43 |   await page.getByRole(\"button\").click();\n     |                                  ^\n  44 | });\n  45 |\n  46 | test(\"css selector missing\", async ({ page }) => {\n    at /__KWIKQA_RUN_ROOT__/tests/app.spec.ts:43:34"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T11:31:20.481Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/__KWIKQA_RUN_ROOT__/test-results/app-ambiguous-button/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/__KWIKQA_RUN_ROOT__/test-results/app-ambiguous-button/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/__KWIKQA_RUN_ROOT__/test-results/app-ambiguous-button/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/__KWIKQA_RUN_ROOT__/tests/app.spec.ts",
+                    "column": 34,
+                    "line": 43
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c31ff144dc4fee3acd0a-0231e0f16098e499a9b4",
+          "file": "app.spec.ts",
+          "line": 42,
+          "column": 5
+        },
+        {
+          "title": "css selector missing",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 8000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "timedOut",
+                  "duration": 8052,
+                  "error": {
+                    "message": "\u001b[31mTest timeout of 8000ms exceeded.\u001b[39m",
+                    "stack": "\u001b[31mTest timeout of 8000ms exceeded.\u001b[39m"
+                  },
+                  "errors": [
+                    {
+                      "message": "\u001b[31mTest timeout of 8000ms exceeded.\u001b[39m"
+                    },
+                    {
+                      "location": {
+                        "file": "/__KWIKQA_RUN_ROOT__/tests/app.spec.ts",
+                        "column": 36,
+                        "line": 47
+                      },
+                      "message": "Error: locator.click: Test timeout of 8000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#apply-btn')\u001b[22m\n\n\n  45 |\n  46 | test(\"css selector missing\", async ({ page }) => {\n> 47 |   await page.locator(\"#apply-btn\").click();\n     |                                    ^\n  48 | });\n  49 |\n    at /__KWIKQA_RUN_ROOT__/tests/app.spec.ts:47:36"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T11:31:21.144Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/__KWIKQA_RUN_ROOT__/test-results/app-css-selector-missing/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/__KWIKQA_RUN_ROOT__/test-results/app-css-selector-missing/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/__KWIKQA_RUN_ROOT__/test-results/app-css-selector-missing/trace.zip"
+                    }
+                  ]
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c31ff144dc4fee3acd0a-6bf2bda7681052a9b27c",
+          "file": "app.spec.ts",
+          "line": 46,
+          "column": 5
+        }
+      ],
+      "suites": []
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-19T11:31:00.933Z",
+    "duration": 28582.58,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 5,
+    "flaky": 0
+  }
+}

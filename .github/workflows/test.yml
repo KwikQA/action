@@ -1,0 +1,48 @@
+name: Test
+
+# Runs the Action on a real Playwright 1.64.1 report with five failures, in test/playwright.
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  failed-run:
+    name: A failed run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - id: tests
+        name: Stand in for the tests, which failed
+        run: exit 1
+        continue-on-error: true
+      - if: steps.tests.outcome == 'failure'
+        uses: ./
+        with:
+          working-directory: test/playwright
+          report: report.json
+          kwikqa-token: ${{ secrets.KWIKQA_TOKEN }}
+          slack-webhook-url: ${{ secrets.KWIKQA_SLACK_WEBHOOK_URL }}
+          teams-webhook-url: ${{ secrets.KWIKQA_TEAMS_WEBHOOK_URL }}
+      - name: Check the report was written
+        run: grep -q '<meta name="kwikqa-report"' test/playwright/kwikqa-report.html
+
+  # The pattern the README shows: the Action as an `if: failure()` step in a job that has already
+  # failed. This job ends red by design; it checks that the Action's own steps still run.
+  failed-job:
+    name: After a failed step (red by design)
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Stand in for the tests, which failed
+        run: exit 1
+      - if: failure()
+        uses: ./
+        with:
+          working-directory: test/playwright
+          report: report.json
+          artifact-name: kwikqa-report-failed-job
