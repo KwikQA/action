@@ -1,0 +1,106 @@
+name: KwikQA
+description: Diagnose a failed Playwright, Cypress, or WebdriverIO run, and summarize it on the job and its pull request.
+author: KwikQA
+branding:
+  icon: check-circle
+  color: blue
+
+inputs:
+  kwikqa-token:
+    description: >-
+      A KwikQA CI token, from a secret. Create one at https://kwikqa.com/dashboard/account/.
+      Without it, the run is analyzed locally, and the summary says it wasn't diagnosed.
+    required: false
+    default: ""
+  github-token:
+    description: >-
+      The token that writes the pull-request comment. The job needs `pull-requests: write`.
+    required: false
+    default: ${{ github.token }}
+  report:
+    description: >-
+      The test report, a file or a directory. When empty, KwikQA looks where Playwright, Cypress,
+      and WebdriverIO usually write theirs.
+    required: false
+    default: ""
+  framework:
+    description: >-
+      For a JUnit report, the framework that wrote it: playwright, cypress, or webdriverio.
+    required: false
+    default: ""
+  working-directory:
+    description: Where to run KwikQA, which is the package that holds your tests.
+    required: false
+    default: "."
+  output:
+    description: Where to write the failure report, relative to `working-directory`.
+    required: false
+    default: kwikqa-report.html
+  local:
+    description: "`true` analyzes without asking a model, even with a token."
+    required: false
+    default: "false"
+  notify:
+    description: "When to post to Slack and Teams: `on-failure` (when tests failed) or `always`."
+    required: false
+    default: on-failure
+  slack-webhook-url:
+    description: A Slack incoming webhook's URL, from a secret.
+    required: false
+    default: ""
+  teams-webhook-url:
+    description: A Teams Workflows webhook's URL, from a secret.
+    required: false
+    default: ""
+  upload-report:
+    description: "`true` keeps the failure report as an artifact of the run."
+    required: false
+    default: "true"
+  artifact-name:
+    description: The report artifact's name. Give each job of a matrix its own.
+    required: false
+    default: kwikqa-report
+  version:
+    description: The kwikqa version to run. Each release of this Action names the one it was tested with.
+    required: false
+    default: 0.2.0
+
+runs:
+  using: composite
+  steps:
+    # The calling step usually runs `if: failure()`, so these steps run unless the job was
+    # cancelled. Inputs reach the script only through the environment, never as script text.
+    - name: Analyze the run with KwikQA
+      if: ${{ !cancelled() }}
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        KWIKQA_TOKEN: ${{ inputs.kwikqa-token }}
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        KWIKQA_SLACK_WEBHOOK_URL: ${{ inputs.slack-webhook-url }}
+        KWIKQA_TEAMS_WEBHOOK_URL: ${{ inputs.teams-webhook-url }}
+        KQA_ACTION_VERSION: ${{ inputs.version }}
+        KQA_ACTION_REPORT: ${{ inputs.report }}
+        KQA_ACTION_FRAMEWORK: ${{ inputs.framework }}
+        KQA_ACTION_OUTPUT: ${{ inputs.output }}
+        KQA_ACTION_LOCAL: ${{ inputs.local }}
+        KQA_ACTION_NOTIFY: ${{ inputs.notify }}
+      run: |
+        set -euo pipefail
+        if ! [[ "$KQA_ACTION_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.]+)?$ ]]; then
+          echo "::error title=KwikQA::version must be an exact version, such as 0.2.0"
+          exit 2
+        fi
+        args=(ci --output "$KQA_ACTION_OUTPUT" --notify "$KQA_ACTION_NOTIFY")
+        if [[ -n "$KQA_ACTION_REPORT" ]]; then args+=(--report "$KQA_ACTION_REPORT"); fi
+        if [[ -n "$KQA_ACTION_FRAMEWORK" ]]; then args+=(--framework "$KQA_ACTION_FRAMEWORK"); fi
+        if [[ "$KQA_ACTION_LOCAL" == "true" ]]; then args+=(--local); fi
+        npx --yes "kwikqa@$KQA_ACTION_VERSION" "${args[@]}"
+
+    - name: Keep the failure report
+      if: ${{ !cancelled() && inputs.upload-report == 'true' }}
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ inputs.working-directory }}/${{ inputs.output }}
+        if-no-files-found: ignore
