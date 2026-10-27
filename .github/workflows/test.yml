@@ -1,6 +1,7 @@
 name: Test
 
 # Runs the Action on a real Playwright 1.64.1 report with five failures, in test/playwright.
+# test/prepare-run.py first makes the recorded run look like the job's own.
 on:
   pull_request:
   workflow_dispatch:
@@ -15,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Point the recorded run at this checkout
+        run: python3 test/prepare-run.py test/playwright
       - id: tests
         name: Stand in for the tests, which failed
         run: exit 1
@@ -38,6 +41,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Point the recorded run at this checkout
+        run: python3 test/prepare-run.py test/playwright
       - name: Stand in for the tests, which failed
         run: exit 1
       - if: failure()
