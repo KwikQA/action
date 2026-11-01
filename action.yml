@@ -63,7 +63,7 @@ inputs:
   version:
     description: The kwikqa version to run. Each release of this Action names the one it was tested with.
     required: false
-    default: 0.2.5
+    default: 0.3.0
 
 runs:
   using: composite
@@ -88,7 +88,7 @@ runs:
       run: |
         set -euo pipefail
         if ! [[ "$KQA_ACTION_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.]+)?$ ]]; then
-          echo "::error title=KwikQA::version must be an exact version, such as 0.2.5"
+          echo "::error title=KwikQA::version must be an exact version, such as 0.3.0"
           exit 2
         fi
         args=(ci --output "$KQA_ACTION_OUTPUT" --notify "$KQA_ACTION_NOTIFY")
