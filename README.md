@@ -93,9 +93,10 @@ webhook, and never prints one.
 - **KwikQA.** With a token, KwikQA's diagnosis requests carry a redacted evidence packet, and each
   request's preview is printed in the job's log. The KwikQA service keeps account, usage, and
   request metadata, and the run's result counts: codes and numbers such as the kind of failure and
-  whether a fix held, never test names, file paths, or code. Your organization's admins can turn
-  result counts off for everyone at https://kwikqa.com/dashboard/organization/#settings, or a job can with
-  `env: { KWIKQA_RESULTS: "off" }` on this step. Without a token, or with `local: true`, nothing goes
+  whether a fix held, never test names, file paths, or code. A company's admins can turn result
+  counts off for everyone at https://kwikqa.com/dashboard/organization/#settings, you can for a
+  personal account at https://kwikqa.com/dashboard/account/, and a job can by setting
+  `KWIKQA_RESULTS: off` in its `env`. Without a token, or with `local: true`, nothing goes
   to KwikQA.
 - **The details.** See [Security and data handling](https://kwikqa.com/security/) and the
   [privacy policy](https://kwikqa.com/privacy/).
