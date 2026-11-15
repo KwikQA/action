@@ -1,7 +1,7 @@
 # KwikQA for GitHub Actions
 
-When your Playwright, Cypress, or WebdriverIO tests fail, this Action runs
-[KwikQA](https://kwikqa.com) on the run:
+When your Playwright, Cypress, WebdriverIO, Java, pytest, or Cucumber-JVM tests fail, this Action
+runs [KwikQA](https://kwikqa.com) on the run:
 
 - **Diagnosis.** It groups the failures by shared cause and diagnoses each group: who owns it (test
   code, application, or environment) and how strong the evidence is.
@@ -40,8 +40,8 @@ reporter: [["list"], ["json", { outputFile: "test-results/kwikqa-report.json" }]
 use: { trace: "retain-on-failure" },
 ```
 
-Cypress and WebdriverIO setup, and every other report format KwikQA reads, are in the
-[KwikQA guide](https://kwikqa.com/docs/).
+Setup for Cypress, WebdriverIO, and JUnit reports from Maven, Gradle, or pytest, and every other
+report format KwikQA reads, is in the [KwikQA guide](https://kwikqa.com/docs/).
 
 ## Inputs
 
