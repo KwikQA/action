@@ -16,8 +16,8 @@ It never fails your build. Anything it can't publish is reported in the log and 
 - **Job identity.** With `id-token: write`, KwikQA sends the job's identity token, which GitHub
   signs, so the KwikQA service can verify the repository and who triggered a pull request's run.
   The token isn't stored.
-- **Node.js.** KwikQA runs on the job's Node.js when it is one KwikQA supports (the long-term support
-  releases 22, 24, and 26; npm lists the exact versions). Otherwise the Action sets up Node.js 24
+- **Node.js.** KwikQA runs on the job's Node.js when it is one KwikQA supports (any release of the
+  long-term support lines 22, 24, and 26, or later). Otherwise the Action sets up Node.js 24
   first, for the rest of the job, and says so in the log.
 
 ## Usage

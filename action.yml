@@ -63,7 +63,7 @@ inputs:
   version:
     description: The kwikqa version to run. Each release of this Action names the one it was tested with.
     required: false
-    default: 0.8.0
+    default: 0.8.1
 
 runs:
   using: composite
@@ -102,6 +102,8 @@ runs:
       uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
       with:
         node-version: 24
+        # The runner's cached Node.js 24 may be the very release that isn't supported.
+        check-latest: true
 
     # The calling step usually runs `if: failure()`, so these steps run unless the job was
     # cancelled. Inputs reach the script only through the environment, never as script text.
@@ -123,7 +125,7 @@ runs:
       run: |
         set -euo pipefail
         if ! [[ "$KQA_ACTION_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.]+)?$ ]]; then
-          echo "::error title=KwikQA::version must be an exact version, such as 0.8.0"
+          echo "::error title=KwikQA::version must be an exact version, such as 0.8.1"
           exit 2
         fi
         args=(ci --output "$KQA_ACTION_OUTPUT" --notify "$KQA_ACTION_NOTIFY")
