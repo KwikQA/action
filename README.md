@@ -13,12 +13,20 @@ runs [KwikQA](https://kwikqa.com) on the run:
 
 It never fails your build. Anything it can't publish is reported in the log and skipped.
 
+- **Job identity.** With `id-token: write`, KwikQA sends the job's identity token, which GitHub
+  signs, so the KwikQA service can verify the repository and who triggered a pull request's run.
+  The token isn't stored.
+- **Node.js.** KwikQA runs on the job's Node.js when it is one KwikQA supports (the long-term support
+  releases 22, 24, and 26; npm lists the exact versions). Otherwise the Action sets up Node.js 24
+  first, for the rest of the job, and says so in the log.
+
 ## Usage
 
 ```yaml
 permissions:
   contents: read
   pull-requests: write # only for the comment
+  id-token: write # lets KwikQA prove which repository the job runs for
 
 jobs:
   e2e:

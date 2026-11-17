@@ -63,11 +63,46 @@ inputs:
   version:
     description: The kwikqa version to run. Each release of this Action names the one it was tested with.
     required: false
-    default: 0.7.0
+    default: 0.8.0
 
 runs:
   using: composite
   steps:
+    # KwikQA supports the Node.js versions its package.json names in `engines`, which npm serves for
+    # each version. When the job's Node.js is another one, KwikQA runs on Node.js 24, the LTS release
+    # it develops on, set up for the rest of the job. A range npm can't serve leaves the job's own.
+    - name: Check the job's Node.js
+      id: node
+      if: ${{ !cancelled() }}
+      shell: bash
+      env:
+        KQA_ACTION_VERSION: ${{ inputs.version }}
+      run: |
+        set -uo pipefail
+        range="$(npm view "kwikqa@$KQA_ACTION_VERSION" engines.node 2>/dev/null || true)"
+        supported="$(node -e '
+          const [range, version] = process.argv.slice(1);
+          const have = version.replace(/^v/, "").split(".").map(Number);
+          const ok = range.split("||").some((part) => {
+            const m = /^\s*(\^|>=)\s*(\d+)\.(\d+)(?:\.(\d+))?\s*$/.exec(part);
+            if (m === null) return false;
+            const least = [Number(m[2]), Number(m[3]), Number(m[4] ?? 0)];
+            const order = have[0] - least[0] || have[1] - least[1] || have[2] - least[2];
+            return order >= 0 && (m[1] === ">=" || have[0] === least[0]);
+          });
+          console.log(range === "" || ok ? "true" : "false");
+        ' "$range" "$(node --version 2>/dev/null || echo v0.0.0)" 2>/dev/null || echo false)"
+        if [[ "$supported" != "true" ]]; then
+          echo "::notice title=KwikQA::kwikqa $KQA_ACTION_VERSION supports Node.js $range; the job has $(node --version 2>/dev/null || echo none). Setting up Node.js 24 for KwikQA."
+        fi
+        echo "supported=$supported" >> "$GITHUB_OUTPUT"
+
+    - name: Set up a Node.js KwikQA supports
+      if: ${{ !cancelled() && steps.node.outputs.supported != 'true' }}
+      uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+      with:
+        node-version: 24
+
     # The calling step usually runs `if: failure()`, so these steps run unless the job was
     # cancelled. Inputs reach the script only through the environment, never as script text.
     - name: Analyze the run with KwikQA
@@ -88,7 +123,7 @@ runs:
       run: |
         set -euo pipefail
         if ! [[ "$KQA_ACTION_VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.]+)?$ ]]; then
-          echo "::error title=KwikQA::version must be an exact version, such as 0.7.0"
+          echo "::error title=KwikQA::version must be an exact version, such as 0.8.0"
           exit 2
         fi
         args=(ci --output "$KQA_ACTION_OUTPUT" --notify "$KQA_ACTION_NOTIFY")
