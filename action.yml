@@ -99,7 +99,7 @@ runs:
 
     - name: Set up a Node.js KwikQA supports
       if: ${{ !cancelled() && steps.node.outputs.supported != 'true' }}
-      uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
+      uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
       with:
         node-version: 24
         # The runner's cached Node.js 24 may be the very release that isn't supported.
