@@ -1,0 +1,17 @@
+# Dependabot (owner's decision, 2026-11-24; kwikqa-cloud docs/trust/security-answers.md).
+# Security updates come from Dependabot alerts, opened as soon as a fix exists. Version updates run
+# weekly and wait 7 days after a release before proposing it, so a bad release has time to be found.
+# Every update goes through a pull request, CI, and the owner's merge, like any other change.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns:
+          - "*"
